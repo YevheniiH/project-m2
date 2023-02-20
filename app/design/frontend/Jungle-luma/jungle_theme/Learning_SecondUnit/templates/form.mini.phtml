@@ -10,7 +10,7 @@ $helper = $configProvider->getSearchHelperData();
 $allowedSuggestion = $configProvider->isSuggestionsAllowed();
 $quickSearchUrl = $allowedSuggestion ? $escaper->escapeUrl($helper->getSuggestUrl()) : '';
 ?>
-<div class="block block-search test">
+<div class="block block-search test232">
     <div class="block block-title"><strong><?= $escaper->escapeHtml(__('Search')) ?></strong></div>
     <div class="block block-content">
         <form class="form minisearch" id="search_mini_form"
@@ -38,7 +38,7 @@ $quickSearchUrl = $allowedSuggestion ? $escaper->escapeUrl($helper->getSuggestUr
                            type="text"
                            name="<?= $escaper->escapeHtmlAttr($helper->getQueryParamName()) ?>"
                            value="<?= /* @noEscape */ $helper->getEscapedQueryText() ?>"
-                           placeholder="<?= $escaper->escapeHtmlAttr(__('Search ...')) ?>"
+                           placeholder="<?= $escaper->escapeHtmlAttr(__('Search <.^.>')) ?>"
                            class="input-text"
                            maxlength="<?= $escaper->escapeHtmlAttr($helper->getMaxQueryLength()) ?>"
                            role="combobox"
