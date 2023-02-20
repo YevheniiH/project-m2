@@ -7,16 +7,16 @@
         <?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
             <li class="item <?= $block->escapeHtmlAttr($crumbName) ?>">
             <?php if ($crumbInfo['link']) : ?>
-                <a href="<?= $block->escapeUrl($crumbInfo['link']) ?>"
+                <button href="<?= $block->escapeUrl($crumbInfo['link']) ?>"
                    title="<?= $block->escapeHtml($crumbInfo['title']) ?>">
                     <?= $block->escapeHtml($crumbInfo['label']) ?>
-                </a>
+                </button>
             <?php elseif ($crumbInfo['last']) : ?>
                 <strong><?= $block->escapeHtml($crumbInfo['label']) ?></strong>
             <?php else : ?>
                 <?= $block->escapeHtml($crumbInfo['label']) ?>
             <?php endif; ?>
-            </li>
+            </li>///
         <?php endforeach; ?>
     </ul>
 </div>
