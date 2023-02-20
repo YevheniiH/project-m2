@@ -29,8 +29,14 @@
         <move element="container-4" destination="content" before="-"/>
         <move element="block-test11" destination="container-1" before="-"/>
         <referenceContainer name="container-1" remove="true"/>
-        <!-- Address link -->
-        <referenceBlock name="top.links" remove="true"/>
-
+<!--        <referenceBlock name="top.links" remove="true"/>-->
+        <referenceBlock name="top.links">
+            <block class="Magento\Customer\Block\Account\Link" name="my-account-link2">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">My Account2</argument>
+                    <argument name="sortOrder" xsi:type="number">110</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>
