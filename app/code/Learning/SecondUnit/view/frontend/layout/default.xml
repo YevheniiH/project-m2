@@ -10,5 +10,6 @@
                 <argument name="logo_width" xsi:type="number">80</argument>
             </arguments>
         </referenceBlock>
+        <referenceBlock name="top.search" template="Learning_SecondUnit::form.mini.phtml"/>
     </body>
 </page>
