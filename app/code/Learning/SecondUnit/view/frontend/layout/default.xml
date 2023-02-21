@@ -10,5 +10,9 @@
                 <argument name="logo_width" xsi:type="number">80</argument>
             </arguments>
         </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="out.array1" template="Learning_SecondUnit::out.array.phtml">
+            </block>
+        </referenceContainer>
     </body>
 </page>
