@@ -34,17 +34,15 @@ $data= [
     ]
 ];
 ?>
-<?php rsort($data);?>
-<?php foreach ($data as $date):?>
-    <p>Year - <?=$date['year']. ';'?></p>
-    <p><?='Month'.' - '.$date['month']. ';';?></p>
-    <p>Day - <?=$date['day'].';';?></p>
-    <span><?='Time : ' .$date['hours'].' '?></span><span> : <?=$date['minutes']?></span><span> : <?=$date['seconds'].';'?></span>
-<?php endforeach; ?>
 
 <?php foreach ($data as $date):?>
-    <span><?='Time : ' .$date['hours'].' '?></span><span> : <?=$date['minutes']?></span><span> : <?=$date['seconds'].';'?></span>
-    <p>Day - <?=$date['day'].';';?></p>
+    <?php if($date['year']==='2029'):?>
+        <p><?=$date['year'].?> - year</p>
+    <?php else:?>
+        <p>Year - <?=$date['year']. ';'?></p>
+    <?php endif;?>
     <p><?='Month'.' - '.$date['month']. ';';?></p>
-    <p>Year - <?=$date['year']. ';'?></p>
+    <p>Day - <?=$date['day'].';';?></p>
+    <span><?='Time : ' .$date['hours'].' '?></span><span> : <?=$date['minutes']?></span><span> : <?=$date['seconds'].';'?></span>
+<hr>
 <?php endforeach; ?>
