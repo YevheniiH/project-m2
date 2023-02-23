@@ -38,5 +38,17 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="mag1_15" template="Magento_Theme::mag_15.phtml">
+                <arguments>
+                    <argument name="class_css" xsi:type="string">red</argument>
+                </arguments>
+            </block>
+            <block name="mag2_15" template="Magento_Theme::mag_15.phtml">
+                <arguments>
+                    <argument name="font_width" xsi:type="number">10</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
     </body>
 </page>
