@@ -50,5 +50,9 @@
                 </arguments>
             </block>
         </referenceContainer>
+        <referenceContainer name="header.container">
+            <block class="Magento\Customer\Block\Account\Customer" name="my.customer" template="Magento_Theme::use_class_methods.phtml">
+            </block>
+        </referenceContainer>
     </body>
 </page>

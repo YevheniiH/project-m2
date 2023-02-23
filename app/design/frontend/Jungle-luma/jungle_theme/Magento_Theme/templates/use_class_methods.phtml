@@ -1,0 +1,9 @@
+<?php
+/** @var string $ */
+$myCustomer = $block->customerLoggedIn();
+?>
+<?php if($myCustomer):?>
+    <p><?=$myCustomer?>Welcome user</p>
+<?php else:?>
+    <p><?=$myCustomer?>You need to login!</p>
+<?php endif;?>
