@@ -34,10 +34,9 @@ $data= [
     ]
 ];
 ?>
-
 <?php foreach ($data as $date):?>
-    <?php if($date['year']==='2029'):?>
-        <p><?=$date['year'].?> - year</p>
+    <?php if($date['year']=='2029'):?>
+        <p><?=$date['year']?> - year</p>
     <?php else:?>
         <p>Year - <?=$date['year']. ';'?></p>
     <?php endif;?>
@@ -46,3 +45,5 @@ $data= [
     <span><?='Time : ' .$date['hours'].' '?></span><span> : <?=$date['minutes']?></span><span> : <?=$date['seconds'].';'?></span>
 <hr>
 <?php endforeach; ?>
+
+
