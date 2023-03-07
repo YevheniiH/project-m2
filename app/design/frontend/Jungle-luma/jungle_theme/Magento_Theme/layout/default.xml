@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+<!--ui component -->
+        <referenceContainer name="header.container">
+            <block name="ui-component-example" template="Magento_Theme::ui_component_example.phtml" before="-"/>
+        </referenceContainer>
+<!--ui component -->
         <referenceContainer name="content">
             <container name="container-1" htmlTag="div" htmlClass="container1"/>
             <container name="container-2" htmlTag="div" htmlClass="container2">
