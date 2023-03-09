@@ -11,7 +11,7 @@ const config = {
                 'Magento_Theme/js/mixin/knockout-view-modeljs-mixin': true
             },
             'Magento_Theme/js/custom-script1':{
-                'Magento_Theme/js/object-mixin': true
+                'Magento_Theme/js/mixin/object-mixin': true
             }
         }
     }
