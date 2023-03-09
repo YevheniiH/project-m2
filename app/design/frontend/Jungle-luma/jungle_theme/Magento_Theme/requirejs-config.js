@@ -8,7 +8,7 @@ const config = {
     config: {
         mixins: {
             'Magento_Theme/js/knockout-view-model': {
-                'Magento_Theme/js/knockout-view-modeljs-mixin': true
+                'Magento_Theme/js/mixin/knockout-view-modeljs-mixin': true
             }
         }
     }
