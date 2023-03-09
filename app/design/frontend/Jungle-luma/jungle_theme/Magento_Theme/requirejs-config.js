@@ -8,7 +8,7 @@ const config = {
     config: {
         mixins: {
             'Magento_Theme/js/custom-script1':{
-                'Magento_Theme/js/object-mixin': true
+                'Magento_Theme/js/mixin/object-mixin': true
             }
         }
     }
