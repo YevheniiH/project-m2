@@ -5,6 +5,29 @@
         <referenceContainer name="header.container">
             <block name="ui-component-example" template="Magento_Theme::ui_component_example.phtml" before="-"/>
         </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="initialize-ui-component" template="Magento_Theme::initialize-ui-componentjs.phtml" before="-">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="exemple-js-field" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Magento_Theme/example_js_component</item>
+                                </item>
+                                <item name="children" xsi:type="array">
+                                    <item name="example_child-js" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">1</item>
+                                        <item name="component" xsi:type="string">Magento_Theme/js/view/example_child-js</item>
+                                        <item name="displayArea" xsi:type="string">example_child-js</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
 <!--ui component -->
         <referenceContainer name="content">
             <container name="container-1" htmlTag="div" htmlClass="container1"/>
