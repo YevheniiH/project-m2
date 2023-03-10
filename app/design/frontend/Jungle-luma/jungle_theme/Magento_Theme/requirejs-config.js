@@ -2,7 +2,8 @@ const config = {
     map: {
         "*": {
             customScript1: 'Magento_Theme/js/custom-script1',
-            customScript2: 'Magento_Theme/js/custom-script2'
+            customScript2: 'Magento_Theme/js/custom-script2',
+            sendDataFromJs: 'Magento_Theme/js/send-data-fromjs'
         }
     },
     config: {

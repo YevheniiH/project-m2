@@ -29,6 +29,11 @@
             </block>
         </referenceContainer>
 <!--ui component -->
+        <!-- send data from phtml. to js-->
+        <referenceContainer name="content">
+            <block name="send-data-from" template="Magento_Theme::send_data_from.phtml" before="-"/>
+        </referenceContainer>
+        <!-- send data from phtml to js-->
         <referenceContainer name="content">
             <container name="container-1" htmlTag="div" htmlClass="container1"/>
             <container name="container-2" htmlTag="div" htmlClass="container2">
