@@ -1,0 +1,48 @@
+<?php
+$data= [
+    [
+        'year'=>'2021',
+        'month'=> '6',
+        'day' => '11',
+        'hours' => '11',
+        'minutes'=>'43',
+        'seconds'=>'10'
+    ],
+    [
+        'year'=>'2020',
+        'month'=> '6',
+        'day' => '6',
+        'hours' => '4',
+        'minutes'=>'20',
+        'seconds'=>'2'
+    ],
+    [
+        'year'=>'2029',
+        'month'=> '3',
+        'day' => '25',
+        'hours' => '16',
+        'minutes'=>'00',
+        'seconds'=>'12'
+    ],
+    [
+        'year'=>'2021',
+        'month'=> '6',
+        'day' => '10',
+        'hours' => '12',
+        'minutes'=>'30',
+        'seconds'=>'12'
+    ]
+];
+?>
+<?php foreach ($data as $date):?>
+    <?php if($date['year']=='2029'):?>
+        <p><?=$date['year']?> - year</p>
+    <?php else:?>
+        <p>Year - <?=$date['year']. ';'?></p>
+    <?php endif;?>
+    <p><?='Month'.' - '.$date['month']. ';';?></p>
+    <p>Day - <?=$date['day'].';';?></p>
+    <span><?='Time : ' .$date['hours'].' '?></span><span> : <?=$date['minutes']?></span><span> : <?=$date['seconds'].';'?></span>
+    <hr>
+<?php endforeach;?>
+
