@@ -10,6 +10,7 @@
         <div class="field qty">
             <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
             <div class="control qty_prod">
+                <span class="qty-decrement">&#60;</span>
                     <input type="number"
                            name="qty"
                            id="qty"
@@ -19,6 +20,7 @@
                            class="input-text qty"
                            data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
                            />
+                <span class="qty-increment" >&#62;</span>
             </div>
         </div>
         <?php endif; ?>
@@ -39,6 +41,9 @@
         "#product_addtocart_form": {
             "Magento_Catalog/js/validate-product": {}
         },
+        "*" :{
+            "Magento_Catalog/js/qty_plus_minus": {}
+        }
     }
 </script>
 
