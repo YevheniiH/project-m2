@@ -4,5 +4,12 @@
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" name="general-goods" template="Magento_Theme::my_block_cms.phtml" />
         </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Cms\Block\Block" name="my_block_cms">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">18</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
     </body>
 </page>
