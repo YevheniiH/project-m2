@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
+<body>
+    <referenceContainer name="main">
+        <block class="Magento\Framework\View\Element\Template" name="image_gallery" template="Magento_Theme::image_gallery.phtml"/>
+    </referenceContainer>
 <!--ui component -->
         <referenceContainer name="header.container">
             <block name="ui-component-example" template="Magento_Theme::ui_component_example.phtml" before="-"/>

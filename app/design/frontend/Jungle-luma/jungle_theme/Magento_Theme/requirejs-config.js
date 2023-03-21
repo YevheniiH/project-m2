@@ -13,6 +13,10 @@ const config = {
             'Magento_Theme/js/custom-script1':{
                 'Magento_Theme/js/mixin/object-mixin': true
             },
+            'Magento_Theme/js/zoom-image': {
+                'Magento_Theme/js/mixin/zoom-image-widget-mixin': true
+            },
         }
     }
 }
+
