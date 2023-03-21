@@ -1,0 +1,22 @@
+<div id="selector" data-bind="scope: 'knockout-example'">
+    <h1 data-bind="text: heading"></h1>
+    <!-- ko template: getTemplate() --> <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+  {
+    "#selector": {
+      "Magento_Ui/js/core/app": {
+        "components": {
+          "knockout-example": {
+            "component": "Magento_Theme/js/knockout-view-model",
+            "config": {
+              "template": "Magento_Theme/knockout-template",
+              "heading": "Hello World!"
+            }
+          }
+        }
+      }
+    }
+  }
+</script>

@@ -1,0 +1,15 @@
+<?php
+$viewModel = $block->getData('view_model');
+$display = $viewModel->isUserLoggedIn();
+
+$jsonArray = $viewModel->getArrayJson('{
+  "_id": 10,
+  "index": 10,
+  "guid": true
+}');
+?>
+<p><?php if($display):?></p>
+<p><?=$display?>'Hello world'</p>
+<?php endif;?>
+
+<p><?=$jsonArray['_id']?></p>

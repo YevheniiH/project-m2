@@ -4,5 +4,89 @@
     <referenceContainer name="main">
         <block class="Magento\Framework\View\Element\Template" name="image_gallery" template="Magento_Theme::image_gallery.phtml"/>
     </referenceContainer>
-</body>
+<!--ui component -->
+        <referenceContainer name="header.container">
+            <block name="ui-component-example" template="Magento_Theme::ui_component_example.phtml" before="-"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="initialize-ui-component" template="Magento_Theme::initialize-ui-componentjs.phtml" before="-">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="exemple-js-field" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Magento_Theme/parent-template</item>
+                                </item>
+                                <item name="children" xsi:type="array">
+                                    <item name="example_child-js" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">1</item>
+                                        <item name="component" xsi:type="string">Magento_Theme/js/view/example_child-js</item>
+                                        <item name="displayArea" xsi:type="string">example_child-js</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+<!--ui component -->
+        <referenceContainer name="content">
+            <container name="container-1" htmlTag="div" htmlClass="container1"/>
+            <container name="container-2" htmlTag="div" htmlClass="container2">
+                <container name="container-3" htmlTag="div" htmlClass="container3"/>
+            </container>
+            <container name="container-4" htmlTag="div" htmlClass="container4"/>
+        </referenceContainer>
+        <referenceContainer name="custom-sidebar">
+            <block class="Magento\Framework\View\Element\Template" name="sidebar-right-block" template="Magento_Theme::2-columns-right-layout.phtml">
+            </block>
+        </referenceContainer>
+        <referenceContainer name="container-3">
+            <block class="Magento\Framework\View\Element\Template" name="block-test111" template="Magento_Theme::block111.phtml">
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="block-test222" template="Magento_Theme::block222.phtml">
+            </block>
+        </referenceContainer>
+        <referenceContainer name="container-4">
+            <block class="Magento\Framework\View\Element\Template" name="block-test11" template="Magento_Theme::block1333.phtml">
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="block-test2" template="Magento_Theme::block2444.phtml">
+            </block>
+        </referenceContainer>
+        <move element="block-test2" destination="container-3" before="block-test222"/>
+        <move element="container-1" destination="container-4" before="-"/>
+        <move element="container-4" destination="content" before="-"/>
+        <move element="block-test11" destination="container-1" before="-"/>
+        <referenceContainer name="container-1" remove="true"/>
+<!--        <referenceBlock name="top.links" remove="true"/>-->
+        <referenceBlock name="top.links">
+            <block class="Magento\Customer\Block\Account\Link" name="my-account-link2">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">My Account2</argument>
+                    <argument name="sortOrder" xsi:type="number">110</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="mag1_15" template="Magento_Theme::mag_15.phtml">
+                <arguments>
+                    <argument name="class_css" xsi:type="string">red</argument>
+                </arguments>
+            </block>
+            <block name="mag2_15" template="Magento_Theme::mag_15.phtml">
+                <arguments>
+                    <argument name="font_width" xsi:type="number">10</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="header.container">
+            <block class="Magento\Customer\Block\Account\Customer" name="my.customer" template="Magento_Theme::use_class_methods.phtml">
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block template="Magento_Theme::js.phtml"/>
+        </referenceContainer>
+    </body>
 </page>
