@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-<body>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="general-goods" template="Magento_Theme::my_block_cms.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Cms\Block\Block" name="my_block_cms">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">18</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
     <referenceContainer name="main">
         <block class="Magento\Framework\View\Element\Template" name="image_gallery" template="Magento_Theme::image_gallery.phtml"/>
         <block class="Magento\Framework\View\Element\Template" name="extend_widget" template="Magento_Theme::extend_widget_zoom.phtml"/>
