@@ -1,0 +1,11 @@
+& when (@media-common = true) {
+
+    @background: pink; // можна вимкнути за допомогою false
+
+    body {
+        //@background: @background; //якщо була така змінна. написати none
+        .lib-css(background, @background, 1);
+        //lib-css приймає три аргумента
+    }
+}
+
