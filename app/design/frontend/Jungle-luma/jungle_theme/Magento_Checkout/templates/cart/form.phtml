@@ -13,7 +13,10 @@
           }'
           class="form form-cart">
     <?= $block->getBlockHtml('formkey') ?>
-    <div class="<?= $mergedCells == 2 ? ' detailed' : '' ?>">
+    <div class="accordion">
+        <div class="js">
+            <button class="heading toggle-items-qty"></button>
+    <div class="content <?= $mergedCells == 2 ? ' detailed' : '' ?>">
         <?php if ($block->getPagerHtml()): ?>
             <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
                  data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?>
@@ -69,6 +72,8 @@
             <span><?= $block->escapeHtml(__('Update Shopping Cart')) ?></span>
         </button>
         <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
+    </div>
+        </div>
     </div>
 </form>
 <?= $block->getChildHtml('checkout.cart.order.actions') ?>
