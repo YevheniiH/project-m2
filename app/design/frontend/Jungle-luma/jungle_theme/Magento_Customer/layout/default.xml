@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="header.links">
+            <block class="Magento\Customer\Block\Account\Customer" name="customer" template="Magento_Customer::account/customer.phtml" />
+            <referenceBlock  name="authorization-link-login" template="Magento_Customer::account/link/authorization_sign.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="top.links">
+        </referenceBlock>
+        <move element="header" destination="header.links" before="-"/>
+        <move element="register-link" destination="header.links"/>
+        <move element="top.links" destination="customer"/>
+        <move element="header.panel" destination="user-bar" after="sidebar-left"/>
+        <move element="account-link" destination="authorization-link" before="-"/>
+        <referenceBlock name="register-link" remove="true"/>
+    </body>
+</page>

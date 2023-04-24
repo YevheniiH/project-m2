@@ -1,0 +1,13 @@
+ <div class="search-toggle">
+        <span><i class="fas fas-icons fa-search"></i>Search</span>
+ </div>
+<?= $block->getChildHtml()?>
+ <script type="text/javascript">
+    require(['jquery'], function($) {
+        $(document).ready(function() {
+            $('.search-toggle').on('click', function () {
+                $('.store.search').slideToggle("fast");
+            })
+        });
+    });
+</script>
