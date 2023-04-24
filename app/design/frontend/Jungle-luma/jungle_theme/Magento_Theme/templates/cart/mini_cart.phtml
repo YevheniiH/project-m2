@@ -1,0 +1,28 @@
+<div class="minicart-toggle" data-bind="scope: 'minicart_content'">
+    <span>
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="text"><?= $block->escapeHtml(__('Cart')) ?></span>
+            <span class="counter qty empty"
+                  data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() },
+                   blockLoader: isLoading">
+                <span class="counter-number">
+                    (<!-- ko if: getCartParam('summary_count') -->
+                    <!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) --><!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko ifnot: getCartParam('summary_count') -->
+                    <!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) -->0<!-- /ko -->
+                    <!-- /ko -->)
+                </span>
+            </span>
+    </span>
+</div>
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        $(document).ready(function() {
+            $('.minicart-toggle').on('click', function () {
+                console.log('click');
+                $('.store.orders').slideToggle("fast");
+            })
+        });
+    });
+</script>

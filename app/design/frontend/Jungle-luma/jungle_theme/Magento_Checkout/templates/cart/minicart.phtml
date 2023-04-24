@@ -1,0 +1,45 @@
+<?php
+
+/** @var $block \Magento\Checkout\Block\Cart\Sidebar */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<div class="store orders" style="display: none">
+    <div data-block="minicart" class="minicart-wrapper">
+        <a class="action showcart" href="<?= $block->escapeUrl($block->getShoppingCartUrl()) ?>"
+           data-bind="scope: 'minicart_content'">
+
+        </a>
+        <?php if ($block->getIsNeedToDisplaySideBar()):?>
+            <div class="block block-minicart">
+                <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div>
+                <?= $block->getChildHtml('minicart.addons') ?>
+            </div>
+        <?php else: ?>
+            <?php $scriptString = <<<script
+                require(['jquery'], function ($) {
+                    $('a.action.showcart').on('click', function() {
+                        $(document.body).trigger('processStart');
+                    });
+                });
+    script;
+            ?>
+            <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+        <?php endif ?>
+        <?= /* @noEscape */ $secureRenderer->renderTag('script', [], 'window.checkout = ' .
+         /* @noEscape */ $block->getSerializedConfig(), false); ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-block='minicart']": {
+                "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+            },
+            "*": {
+                "Magento_Ui/js/block-loader": "<?= $block->escapeJs(
+                    $block->escapeUrl($block->getViewFileUrl('images/loader-1.gif'))
+                ) ?>"
+            }
+        }
+        </script>
+    </div>
+</div>

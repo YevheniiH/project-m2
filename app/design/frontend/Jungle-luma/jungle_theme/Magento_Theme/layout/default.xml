@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!--Header-->
+        <referenceContainer name="header.container">
+            <container name="user-bar" htmlTag="div" htmlClass="user-bar">
+                <block class="Magento\Framework\View\Element\Template" name="sidebar-left" template="Magento_Theme::html/search_panel.phtml">
+                </block>
+                <block class="Magento\Framework\View\Element\Template" name="sidebar-right" template="Magento_Theme::cart/mini_cart.phtml" >
+                </block>
+            </container>
+        </referenceContainer>
+        <move element="top.search" destination="header.container" />
+        <move element="minicart" destination="header.container"/>
+    </body>
+</page>
