@@ -1,7 +1,6 @@
 <div class="minicart-toggle" data-bind="scope: 'minicart_content'">
     <span>
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span class="text"><?= $block->escapeHtml(__('Cart')) ?></span>
+        <span class="text"><i class='fas fa-shopping-cart'></i><?= $block->escapeHtml(__('Cart')) ?></span>
             <span class="counter qty empty"
                   data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() },
                    blockLoader: isLoading">
@@ -20,9 +19,9 @@
     require(['jquery'], function($) {
         $(document).ready(function() {
             $('.minicart-toggle').on('click', function () {
-                console.log('click');
                 $('.store.orders').slideToggle("fast");
             })
         });
     });
 </script>
+

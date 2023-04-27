@@ -10,7 +10,7 @@ $helper = $configProvider->getSearchHelperData();
 $allowedSuggestion = $configProvider->isSuggestionsAllowed();
 $quickSearchUrl = $allowedSuggestion ? $escaper->escapeUrl($helper->getSuggestUrl()) : '';
 ?>
-<div class="store search" style="display: none">
+<div class="store search">
     <div class="block block-search">
         <div class="block block-title"><strong><?= $escaper->escapeHtml(__('Search')) ?></strong></div>
         <div class="block block-content">

@@ -3,12 +3,8 @@
 /** @var $block \Magento\Checkout\Block\Cart\Sidebar */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
-<div class="store orders" style="display: none">
+<div class="store orders">
     <div data-block="minicart" class="minicart-wrapper">
-        <a class="action showcart" href="<?= $block->escapeUrl($block->getShoppingCartUrl()) ?>"
-           data-bind="scope: 'minicart_content'">
-
-        </a>
         <?php if ($block->getIsNeedToDisplaySideBar()):?>
             <div class="block block-minicart">
                 <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">

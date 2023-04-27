@@ -8,6 +8,5 @@
         <font src="fonts/opensans/bold/opensans-700.woff2"/>
         <font src="fonts/Luma-Icons.woff2"/>
         <css  src="https://use.fontawesome.com/releases/v5.2.0/css/all.css" src_type="url"/>
-        <css src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     </head>
 </page>
