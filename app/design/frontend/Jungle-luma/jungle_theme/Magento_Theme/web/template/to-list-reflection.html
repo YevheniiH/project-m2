@@ -1,0 +1,21 @@
+<div class="to-do-content">
+    <button class="add-todo" data-bind="click: openPopup">ADD TODO</button>
+    <div id="modal-content" style="display: none;">
+        <form class="modal-inner-content" data-bind="submit: addCategory">
+            <select id="categorySelect" data-bind="value: selectedCategory">
+                <option value="House">House</option>
+                <option value="Work">Work</option>
+                <option value="Rest">Rest</option>
+            </select>
+            <input type="text" id="newCategory" name="newCategory" data-bind="value: newCategoryName" placeholder="new category name">
+            <input type="text" id="newItem" name="newItem" data-bind="value: newItem" placeholder="new item">
+            <button type="submit">save</button>
+        </form>
+    </div>
+    <div data-bind="foreach: categories">
+        <h3 data-bind="text: category"></h3>
+        <ul data-bind="foreach: items">
+            <li data-bind="text: $data"></li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div id="wrapper-to-do-list" data-bind="scope:'to-do-list-component'">
+    <!-- ko template: getTemplate() --> <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#wrapper-to-do-list": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "to-do-list-component": {
+                        "component": "Magento_Theme/js/to-do-list",
+                        "config": {
+                            "template": "Magento_Theme/to-list-reflection"
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>
