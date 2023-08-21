@@ -25,18 +25,15 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
                 category: category,
                 item: item,
             });
-            console.log(this.editingItem());
+            this.selectedCategory(category.category);
+            this.newItem(item.value);
+
         },
 
         saveItem: function () {
-            if(this.editingItem().item.value === this.newItem()){
-                console.log('значення рівні');
-            }
-            if(this.editingItem().item.value !== this.newItem()) {
-                console.log('значення не рівні');
-
-                 const categoriesValueMap = this.categories().map(category=> {
-                   if(category.category === this.editingItem().category.category) {
+            if( this.editingItem().item.value === this.newItem() && this.editingItem().category.category === this.editingItem().category.category || this.editingItem().item.value !== this.newItem() || this.editingItem().category.category !== this.editingItem().category.category)  {
+                const categoriesValueMap = this.categories().map(category=> {
+                    if(category.category === this.editingItem().category.category) {
                        category.items(category.items().map(item => {
                            console.log(this.editingItem().item.id);
                            if(item.id === this.editingItem().item.id){
@@ -45,15 +42,13 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
                            }
                            console.log(item);
                            return item;
-
                        }))
-                   }
+                    }
                     console.log(category.items());
                    return category;
                 })
-            console.log(categoriesValueMap[0].items());
                 this.categories([]);
-                 this.categories(categoriesValueMap);
+                this.categories(categoriesValueMap);
             }
         },
 //
