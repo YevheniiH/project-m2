@@ -9,13 +9,54 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
             this.categories = ko.observableArray([
                 { category: 'House', items: ko.observableArray([]) },
                 { category: 'Work', items: ko.observableArray([]) },
-                { category: 'Rest', items: ko.observableArray([]) }
+                { category: 'Rest', items: ko.observableArray([]) },
+                { category: 'Homework', items: ko.observableArray([]) }
             ]);
             this.selectedCategory = ko.observable('');
             this.newCategoryName = ko.observable('');
             this.newItem = ko.observable('');
             this.selectedCategoryItems = ko.observableArray([]);
+            this.editingItem = ko.observable(null);
         },
+///
+        editItem: function (category, item) {
+            this.openPopup();
+            this.editingItem({
+                category: category,
+                item: item,
+            });
+            console.log(this.editingItem());
+        },
+
+        saveItem: function () {
+            if(this.editingItem().item.value === this.newItem()){
+                console.log('значення рівні');
+            }
+            if(this.editingItem().item.value !== this.newItem()) {
+                console.log('значення не рівні');
+
+                 const categoriesValueMap = this.categories().map(category=> {
+                   if(category.category === this.editingItem().category.category) {
+                       category.items(category.items().map(item => {
+                           console.log(this.editingItem().item.id);
+                           if(item.id === this.editingItem().item.id){
+                               item.value = this.newItem();
+                               console.log(item.value);
+                           }
+                           console.log(item);
+                           return item;
+
+                       }))
+                   }
+                    console.log(category.items());
+                   return category;
+                })
+            console.log(categoriesValueMap[0].items());
+                this.categories([]);
+                 this.categories(categoriesValueMap);
+            }
+        },
+//
 
         toggleFormVisibility: function () {
             this.showForm(!this.showForm());
@@ -26,19 +67,25 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
             const self = this;
             const newCategory = this.newCategoryName();
 
-
             if (newCategory && !this.categoryExists(newCategory) && self.newItem()) {
-                this.categories.push({category: newCategory, items: ko.observableArray([this.newItem()])});
+                const newId = Date.now();
+                this.categories.push({
+                    category: newCategory,
+                    items: ko.observableArray([{id: newId, value: self.newItem()}])
+                });
+
                 this.selectedCategory(newCategory);
                 this.newCategoryName('');
+                self.newItem('');
                 this.closePopup();
             } else {
                 const targetCategory = this.categories().map(function (cat) {
-
                     const categoryToChange =  self.newCategoryName() || self.selectedCategory();
 
                     if (categoryToChange.toLowerCase() === cat['category'].toLowerCase() && self.newItem()) {
-                        cat.items.push(self.newItem());
+                        cat.items.push({ id: Date.now(), value: self.newItem() });
+                        self.newItem('');
+                        self.closePopup();
                     }
 
                     return cat
