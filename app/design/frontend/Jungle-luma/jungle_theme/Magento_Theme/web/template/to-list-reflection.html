@@ -1,5 +1,5 @@
 <div class="to-do-content">
-    <button class="add-todo" data-bind="click: openPopup">ADD TODO</button>
+    <button class="add-todo" data-bind="click: toggleFormAndPopupVisibility">ADD TODO</button>
     <div id="modal-content" style="display: none;">
         <form class="modal-inner-content" data-bind="submit: addCategory">
             <select id="categorySelect" data-bind="foreach: categories, value: selectedCategory">
@@ -7,9 +7,9 @@
             </select>
             <input type="text" id="newCategory" name="newCategory" data-bind="value: newCategoryName" placeholder="new category name">
             <input type="text" id="newItem" name="newItem" data-bind="value: newItem" placeholder="new item">
-            <button type="submit">save</button>
+            <button data-bind="visible: !isEditSave()" type="submit">save</button>
         </form>
-        <button data-bind="click: saveItem">save Edit</button>
+        <button data-bind="click: saveItem, visible: isEditSave()">save Edit</button>
     </div>
     <div data-bind="foreach: {data: categories, as: 'category'}">
         <h3 data-bind="text: category"></h3>
@@ -17,9 +17,15 @@
             <ul data-bind="foreach: category.items">
                 <li>
                     <span data-bind="text: $data.value"></span>
-                    <button data-bind="click: $parent.editItem.bind($parent, category)">Edit</button>
+                    <div>
+                        <button class="edit edit-delete" data-bind="click: $parent.editItem.bind($parent, category)">Edit</button>
+                        
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
+
+
+
 </div>

@@ -17,51 +17,96 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
             this.newItem = ko.observable('');
             this.selectedCategoryItems = ko.observableArray([]);
             this.editingItem = ko.observable(null);
+            this.isEditSave = ko.observable(false); //видимість кнопки "save Edit" кнопки
+
         },
-///
+
+
+
+        ////////// started function edit and save  ////////
         editItem: function (category, item) {
             this.openPopup();
+            // обєкт який редагую
             this.editingItem({
                 category: category,
                 item: item,
             });
+            //відображення категорії редагування
             this.selectedCategory(category.category);
+            //задача елемента для редагування
             this.newItem(item.value);
-
+            this.isEditSave(true); //встановлюю флажок що кнопка видима
         },
 
         saveItem: function () {
-            if( this.editingItem().item.value === this.newItem() && this.editingItem().category.category === this.editingItem().category.category || this.editingItem().item.value !== this.newItem() || this.editingItem().category.category !== this.editingItem().category.category)  {
-                const categoriesValueMap = this.categories().map(category=> {
-                    if(category.category === this.editingItem().category.category) {
-                       category.items(category.items().map(item => {
-                           console.log(this.editingItem().item.id);
-                           if(item.id === this.editingItem().item.id){
-                               item.value = this.newItem();
-                               console.log(item.value);
-                           }
-                           console.log(item);
-                           return item;
-                       }))
-                    }
-                    console.log(category.items());
-                   return category;
-                })
-                this.categories([]);
-                this.categories(categoriesValueMap);
+            // Отримую елемент для редагування
+            const editingItem = this.editingItem();
+            // тут отримую назву нової категорії
+            const newCategory = this.newCategoryName();
+            // Перевіряю чи потрібно створити нову категорію і задачу
+            if (newCategory && !this.categoryExists(newCategory) && this.newItem().trim() !== '') {
+                const newId = Date.now();
+                // Додаю нову категорію і задачу до списку
+                this.categories.push({
+                    category: newCategory,
+                    items: ko.observableArray([{ id: newId, value: this.newItem() }])
+                });
+                // Встановлюю обрану категорію на нову категорію
+                this.selectedCategory(newCategory);
+                //очищаю назву нової категорії та задачі
+                this.newCategoryName('');
+                this.newItem('');
             }
+            // роблю перевірку для того чи потрібно зберегти редагований елемент
+            if (editingItem) {
+                // Перевіряю, чи відбулися зміни у задачі або категорії
+                if (editingItem.item.value !== this.newItem() || editingItem.category.category !== this.selectedCategory()) {
+                    // Видаляю задачу  із попередньої категорії
+                    editingItem.category.items.remove(editingItem.item);
+                    // Знаходжу або створюю категорію, в яку буде перенесений редагований елемент
+                    let targetCategory = null;
+                    for (const cat of this.categories()) {
+                        if (cat.category === this.selectedCategory()) {
+                            targetCategory = cat; // Зберігаю знайдену категорію
+                            break;
+                        }
+                    }
+                    // Додаю редагований елемент до вибраної чи нової категорії
+                    if (targetCategory) {
+                        if (this.newItem().trim() !== '') { // Перевірка на пусту задачу
+                            targetCategory.items.push({
+                                id: editingItem.item.id,
+                                value: this.newItem(),
+                            });
+                        }
+                        // Якщо оригінальна категорія порожня, видаляю її
+                        if (editingItem.category.items().length === 0) {
+                            this.categories.remove(editingItem.category);
+                        }
+                    }
+                }
+            }
+            // Завершую редагування, очищаю дані
+            this.editingItem(null);
+            this.newItem('');
+            this.closePopup();
         },
-//
+        ////////// end function edit and save //////////
+
+        toggleFormAndPopupVisibility: function () {
+            this.toggleFormVisibility();
+            this.openPopup();
+        },
 
         toggleFormVisibility: function () {
             this.showForm(!this.showForm());
             this.selectedCategory('');
+            this.isEditSave(false);
         },
 
         addCategory: function () {
             const self = this;
             const newCategory = this.newCategoryName();
-
             if (newCategory && !this.categoryExists(newCategory) && self.newItem()) {
                 const newId = Date.now();
                 this.categories.push({
