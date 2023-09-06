@@ -6,26 +6,57 @@
                 <option data-bind="text: category, value: category"></option>
             </select>
             <input type="text" id="newCategory" name="newCategory" data-bind="value: newCategoryName" placeholder="new category name">
-            <input type="text" id="newItem" name="newItem" data-bind="value: newItem" placeholder="new item">
+
+            <div class="list-task" data-bind="style:{'background-color': newBackgroundColor}">
+                <button class="button-pin" >
+                    <i class='fas fa-map-pin' style='font-size:28px' data-bind="style: { color: newIconColor}"></i>
+                </button>
+                <input type="text" id="newItem" name="newItem" data-bind="value: newItem" placeholder="new item">
+            </div>
+            <div class="button-generate">
+                <button data-bind="click: generateNewColorBg">generate bg</button>
+                <button data-bind="click: generateNewColorIcon">generate icon</button>
+            </div>
+
             <button data-bind="visible: !isEditSave()" type="submit">save</button>
         </form>
-        <button data-bind="click: saveItem, visible: isEditSave()">save Edit</button>
+        <button data-bind="click: saveItem, visible: isEditSave()">Edit</button>
     </div>
-    <div data-bind="foreach: {data: categories, as: 'category'}">
-        <h3 data-bind="text: category"></h3>
-        <div data-bind="with: $parent">
-            <ul data-bind="foreach: category.items">
-                <li>
-                    <span data-bind="text: $data.value"></span>
-                    <div>
-                        <button class="edit edit-delete" data-bind="click: $parent.editItem.bind($parent, category)">Edit</button>
-                        
-                    </div>
-                </li>
-            </ul>
+
+    <div class="wrapper-slide-to-do" data-bind="foreach: {data: categories, as: 'category'}">
+        <div class="block-slide">
+            <h3 data-bind="text: category"></h3>
+            <div class="block-list" data-bind="with: $parent">
+                <ul class="items-list slick-slide" data-bind="foreach: category.items">
+                    <li class="item-list" data-bind="style:{'background-color': backgroundColor}" >
+                        <button class="button-pin">
+                            <i class='fas fa-map-pin' style='font-size:28px' data-bind="style: { color: iconColor }"></i>
+                        </button>
+                        <span data-bind="text: $data.value"></span>
+                        <div class="items-button">
+                            <button class="edit edit-delete" data-bind="click: $parent.editItem.bind($parent, category)"><i class='far fa-edit' style='font-size:18px'></i></button>
+                            <button class="delete edit-delete" data-bind="click: $parent.archiveCategory.bind($parent, category)"><i class='fas fa-trash' style='font-size:18px'></i></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-
+    <button class="button-archive" data-bind="click: toggleArchive">Archive</button>
+        <div id="archive-popup" style="display: none;" class="wrapper-archive" data-bind="visible: toggleArchiveSwitch">
+            <div class="wrapper-archive" data-bind="foreach:{data: archive, as:'category'} ">
+                <div data-bind="with: $parent">
+                    <h3 data-bind="text: category.category"></h3>
+                    <ul data-bind="foreach: category.items">
+                        <li>
+                            <span data-bind="text: $data.value"></span>
+                            <button data-bind="click: $parent.removeItemArchive.bind($parent, category)">delete archive</button>
+                            <button data-bind="click: $parent.restoreItemArchive.bind($parent, category)">restore</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
 </div>

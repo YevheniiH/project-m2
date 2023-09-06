@@ -1,16 +1,31 @@
-define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($, Component, ko, modal) {
+define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], function ($, Component, ko, modal) {
     'use strict';
 
     return Component.extend({
+
         initialize: function () {
             this._super();
-
             this.showForm = ko.observable(false);
             this.categories = ko.observableArray([
-                { category: 'House', items: ko.observableArray([]) },
-                { category: 'Work', items: ko.observableArray([]) },
-                { category: 'Rest', items: ko.observableArray([]) },
-                { category: 'Homework', items: ko.observableArray([]) }
+                {
+                    category: 'House',
+                    items: ko.observableArray([]),
+                    iconColor: this.getRandomColor(),
+                    isArchived: ko.observable(false),
+                    //
+                },
+                {
+                    category: 'Work',
+                    items: ko.observableArray([]),
+                    iconColor: this.getRandomColor(),
+                    // isCollapsed: ko.observable(false)
+                },
+                {
+                    category: 'Rest',
+                    items: ko.observableArray([]),
+                    iconColor: this.getRandomColor(),
+                    // isCollapsed: ko.observable(false)
+                },
             ]);
             this.selectedCategory = ko.observable('');
             this.newCategoryName = ko.observable('');
@@ -18,9 +33,141 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
             this.selectedCategoryItems = ko.observableArray([]);
             this.editingItem = ko.observable(null);
             this.isEditSave = ko.observable(false); //видимість кнопки "save Edit" кнопки
+            this.archive  = ko.observableArray([]);
+            this.toggleArchiveSwitch = ko.observable(false);
+            this.newBackgroundColor = ko.observable('')
+            this.newIconColor = ko.observable('');
 
         },
 
+
+        generateNewColorBg: function (){
+            this.newBackgroundColor(this.getRandomColor());
+        },
+        generateNewColorIcon: function (){
+            this.newIconColor(this.getRandomColor());
+        },
+        // ////////// started function slide  ////////
+        //
+        // incrementClickCounter: function () {
+        //     console.log('clip');
+        //
+        // },
+        //
+        // decrementClickCounter: function () {
+        //     console.log('clop');
+        // },
+        ////////// started function getRandom  ////////
+
+        getRandomColor: function () {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        },
+
+        ////////// end function getRandom  ///////////
+
+        ////////// started function edit and save  ////////
+        toggleArchive: function (){
+            this.toggleArchiveSwitch(!this.toggleArchiveSwitch());
+            this.archivePopup('');
+        },
+
+        removeItemArchive: function (category, item){
+            category.items.remove(item);
+            if(category.items().length === 0){
+                this.archive.remove(category);
+            }
+        },
+
+        // function restore
+        restoreItemArchive: function (category, item) {
+            const newId = Date.now();
+            const categoryName = item.originalCategory;
+            const itemValue =  item.value;
+            const itemBackgroundColor = item.backgroundColor;
+            const itemIconColor =  item.iconColor;
+
+            let existingCategory = null;
+            for (let i = 0; i < this.categories().length; i++) {
+                if (this.categories()[i].category === categoryName) {
+                    existingCategory = this.categories()[i];
+                    break;
+                }
+            }
+
+            if (existingCategory) {
+                existingCategory.items.push({
+                    id: newId,
+                    value: itemValue,
+                    backgroundColor: itemBackgroundColor,
+                    iconColor: itemIconColor,
+
+                });
+            } else {
+                this.categories.push({
+                    category: categoryName,
+                    items: ko.observableArray([{
+                        id: newId,
+                        value: itemValue,
+                        backgroundColor: itemBackgroundColor,
+                        iconColor: itemIconColor,
+                    }])
+                });
+            }
+            this.removeItemArchive(category, item);
+            this.closePopup('#archive-popup');
+        },
+        //
+        archiveCategory: function (category, item) {
+            const newId = Date.now();
+            const categoryName = category.category;
+            const itemName = item.value;
+
+            let existingCategory = null;
+            for(let i = 0; i < this.archive().length; i++ ) {
+                if(this.archive()[i].category === categoryName){ // цикл для перевірки чи є така категорія в масиві архів
+                    existingCategory = this.archive()[i]; // якщо знайденна присвоюю значення змінній щоб в подальшому додати задачу
+                    break;
+                }
+            }
+
+            if(existingCategory){ // якщо категорія існує
+                existingCategory.items.push({
+                    id: newId,
+                    value: itemName,
+                    backgroundColor: item.backgroundColor,
+                    iconColor: item.iconColor,
+                    originalCategory: categoryName,
+                }) // додаю в масив з категорією задачу
+            } else {// якщож категорія не існує
+                this.archive.push({//то додаю до масиву як категорію так і задачу
+                    category: categoryName,
+                    items: ko.observableArray([{
+                        id: newId,
+                        value: itemName,
+                        backgroundColor: item.backgroundColor,
+                        iconColor: item.iconColor,
+                        originalCategory: categoryName,
+                    }])
+                });
+            }
+            this.closePopup('#archive-popup');
+            this.sortArchive();//викликаю функцію сортування
+
+            category.items.remove(item); // видаляю задачу
+            if (category.items().length === 0) { // якщо в категорії відсутні задачі (пуста) видалити категорію
+                this.categories.remove(category);
+            }
+        },
+
+        sortArchive: function (){
+            this.archive.sort((a, b) => a.category.localeCompare(b.category));//порівнюю два елементи localeCompare визначає я категорія слідує за алфавітом
+        },
+        ////////// end function edit and save  ////////
 
 
         ////////// started function edit and save  ////////
@@ -31,6 +178,8 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
                 category: category,
                 item: item,
             });
+            this.newBackgroundColor(item.backgroundColor);
+            this.newIconColor(item.iconColor);
             //відображення категорії редагування
             this.selectedCategory(category.category);
             //задача елемента для редагування
@@ -39,18 +188,27 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
         },
 
         saveItem: function () {
+
+            const self = this;
             // Отримую елемент для редагування
             const editingItem = this.editingItem();
             // тут отримую назву нової категорії
             const newCategory = this.newCategoryName();
+            let originalBackgroundColor = null;
             // Перевіряю чи потрібно створити нову категорію і задачу
             if (newCategory && !this.categoryExists(newCategory) && this.newItem().trim() !== '') {
                 const newId = Date.now();
                 // Додаю нову категорію і задачу до списку
                 this.categories.push({
                     category: newCategory,
-                    items: ko.observableArray([{ id: newId, value: this.newItem() }])
+                    items: ko.observableArray([{
+                        id: newId,
+                        value: this.newItem(),
+                        backgroundColor: self.newBackgroundColor(),
+                        iconColor: self.newIconColor(),
+                    }])
                 });
+
                 // Встановлюю обрану категорію на нову категорію
                 this.selectedCategory(newCategory);
                 //очищаю назву нової категорії та задачі
@@ -60,7 +218,7 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
             // роблю перевірку для того чи потрібно зберегти редагований елемент
             if (editingItem) {
                 // Перевіряю, чи відбулися зміни у задачі або категорії
-                if (editingItem.item.value !== this.newItem() || editingItem.category.category !== this.selectedCategory()) {
+                if (editingItem.item.value !== this.newItem() || editingItem.category.category !== this.selectedCategory() || originalBackgroundColor !== self.newBackgroundColor) {
                     // Видаляю задачу  із попередньої категорії
                     editingItem.category.items.remove(editingItem.item);
                     // Знаходжу або створюю категорію, в яку буде перенесений редагований елемент
@@ -77,6 +235,8 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
                             targetCategory.items.push({
                                 id: editingItem.item.id,
                                 value: this.newItem(),
+                                backgroundColor: self.newBackgroundColor(),
+                                iconColor: self.newIconColor(),
                             });
                         }
                         // Якщо оригінальна категорія порожня, видаляю її
@@ -86,10 +246,10 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
                     }
                 }
             }
-            // Завершую редагування, очищаю дані
+
             this.editingItem(null);
             this.newItem('');
-            this.closePopup();
+            this.closePopup('#modal-content');
         },
         ////////// end function edit and save //////////
 
@@ -104,30 +264,43 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
             this.isEditSave(false);
         },
 
+
         addCategory: function () {
             const self = this;
             const newCategory = this.newCategoryName();
             if (newCategory && !this.categoryExists(newCategory) && self.newItem()) {
                 const newId = Date.now();
+
                 this.categories.push({
                     category: newCategory,
-                    items: ko.observableArray([{id: newId, value: self.newItem()}])
-                });
 
+                    items: ko.observableArray([{
+                        id: newId,
+                        value: self.newItem(),
+                        backgroundColor: self.newBackgroundColor(),
+                        iconColor: self.newIconColor(),
+                    }]),
+                });
                 this.selectedCategory(newCategory);
                 this.newCategoryName('');
                 self.newItem('');
-                this.closePopup();
+                this.slickSlide();
+                this.closePopup('#modal-content');
             } else {
                 const targetCategory = this.categories().map(function (cat) {
                     const categoryToChange =  self.newCategoryName() || self.selectedCategory();
 
                     if (categoryToChange.toLowerCase() === cat['category'].toLowerCase() && self.newItem()) {
-                        cat.items.push({ id: Date.now(), value: self.newItem() });
+                        cat.items.push({
+                            id: Date.now(),
+                            value: self.newItem(),
+                            backgroundColor: self.newBackgroundColor(),
+                            iconColor: self.newIconColor(),
+                        });
                         self.newItem('');
-                        self.closePopup();
-                    }
+                        self.closePopup('#modal-content');
 
+                    }
                     return cat
                 });
                 this.categories(targetCategory);
@@ -162,12 +335,30 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal'], function ($
                 title: 'Add Category',
                 buttons: []
             };
+            this.newBackgroundColor(this.getRandomColor());
+            this.newIconColor(this.getRandomColor());
+            this.generateNewColorBg(this.getRandomColor());
+            this.generateNewColorIcon(this.getRandomColor());
             const popup = modal(options, $('#modal-content'));
             $('#modal-content').modal('openModal');
         },
 
-        closePopup: function () {
-            $('#modal-content').modal('closeModal');
-        }
+        archivePopup: function () {
+            const options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'archive-popup',
+                buttons: []
+            };
+
+            const popup = modal(options, $('#archive-popup'));
+            $('#archive-popup').modal('openModal');
+        },
+
+        closePopup: function (id) {
+            $(id).modal('closeModal');
+        },
+
     });
 });
