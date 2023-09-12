@@ -26,37 +26,38 @@
     <div class="wrapper-slide-to-do" data-bind="foreach: {data: categories, as: 'category'}">
         <div class="block-slide">
             <h3 data-bind="text: category"></h3>
-            <div class="block-list" data-bind="with: $parent">
-                <ul class="items-list slick-slide" data-bind="foreach: category.items">
-                    <li class="item-list" data-bind="style:{'background-color': backgroundColor}" >
+        </div>
+        <div class="block-list" data-bind="with: $parent, attr:{'data-category-index': $index()}">
+            <ul class="slider-default" data-bind="foreach: category.items">
+                <li class="item-list">
+                    <div class="сontents-list"  data-bind="style:{'background-color': backgroundColor}">
                         <button class="button-pin">
                             <i class='fas fa-map-pin' style='font-size:28px' data-bind="style: { color: iconColor }"></i>
                         </button>
                         <span data-bind="text: $data.value"></span>
                         <div class="items-button">
-                            <button class="edit edit-delete" data-bind="click: $parent.editItem.bind($parent, category)"><i class='far fa-edit' style='font-size:18px'></i></button>
-                            <button class="delete edit-delete" data-bind="click: $parent.archiveCategory.bind($parent, category)"><i class='fas fa-trash' style='font-size:18px'></i></button>
+                            <button class="edit edit-delete" data-bind="attr:{'data-item-index': $index()}"><i class='far fa-edit' style='font-size:18px'></i></button>
+                            <button class="delete edit-delete" ><i class='fas fa-trash' style='font-size:18px'></i></button>
                         </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <button class="button-archive" data-bind="click: toggleArchive">Archive</button>
+    <div id="archive-popup" style="display: none;" class="wrapper-archive" data-bind="visible: toggleArchiveSwitch">
+        <div class="wrapper-archive" data-bind="foreach:{data: archive, as:'category'} ">
+            <div data-bind="with: $parent">
+                <h3 data-bind="text: category.category"></h3>
+                <ul data-bind="foreach: category.items">
+                    <li>
+                        <span data-bind="text: $data.value"></span>
+                        <button data-bind="click: $parent.removeItemArchive.bind($parent, category)">delete archive</button>
+                        <button data-bind="click: $parent.restoreItemArchive.bind($parent, category)">restore</button>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-
-    <button class="button-archive" data-bind="click: toggleArchive">Archive</button>
-        <div id="archive-popup" style="display: none;" class="wrapper-archive" data-bind="visible: toggleArchiveSwitch">
-            <div class="wrapper-archive" data-bind="foreach:{data: archive, as:'category'} ">
-                <div data-bind="with: $parent">
-                    <h3 data-bind="text: category.category"></h3>
-                    <ul data-bind="foreach: category.items">
-                        <li>
-                            <span data-bind="text: $data.value"></span>
-                            <button data-bind="click: $parent.removeItemArchive.bind($parent, category)">delete archive</button>
-                            <button data-bind="click: $parent.restoreItemArchive.bind($parent, category)">restore</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
 </div>

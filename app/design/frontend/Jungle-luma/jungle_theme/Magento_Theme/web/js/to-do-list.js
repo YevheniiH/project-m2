@@ -9,36 +9,71 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
             this.categories = ko.observableArray([
                 {
                     category: 'House',
-                    items: ko.observableArray([]),
-                    iconColor: this.getRandomColor(),
-                    isArchived: ko.observable(false),
-                    //
+                    items: ko.observableArray([
+                        {
+                        id: 1,
+                        value: 'OOO',
+                        backgroundColor: 'white',
+                        iconColor: 'gold',
+                        },
+                        {
+                            id: 2,
+                            value: 'AAAAA',
+                            backgroundColor: 'gold',
+                            iconColor: 'blue',
+                        },
+                    ]),
                 },
                 {
                     category: 'Work',
                     items: ko.observableArray([]),
-                    iconColor: this.getRandomColor(),
-                    // isCollapsed: ko.observable(false)
                 },
                 {
                     category: 'Rest',
-                    items: ko.observableArray([]),
-                    iconColor: this.getRandomColor(),
-                    // isCollapsed: ko.observable(false)
+                    items: ko.observableArray([
+                        {
+                            id: 2.2,
+                            value: '2.2',
+                            backgroundColor: 'red',
+                            iconColor: 'black',
+                        },
+                        {
+                            id: 2.3,
+                            value: '2.3',
+                            backgroundColor: 'black',
+                            iconColor: 'pink',
+                        },
+                        {
+                            id: 2.4,
+                            value: '2.5',
+                            backgroundColor: 'green',
+                            iconColor: 'red',
+                        },
+                        {
+                            id: 2.5,
+                            value: '2.6',
+                            backgroundColor: 'yellow',
+                            iconColor: 'blue',
+                        },
+                    ]),
                 },
             ]);
             this.selectedCategory = ko.observable('');
             this.newCategoryName = ko.observable('');
             this.newItem = ko.observable('');
             this.selectedCategoryItems = ko.observableArray([]);
-            this.editingItem = ko.observable(null);
+
             this.isEditSave = ko.observable(false); //видимість кнопки "save Edit" кнопки
             this.archive  = ko.observableArray([]);
             this.toggleArchiveSwitch = ko.observable(false);
             this.newBackgroundColor = ko.observable('')
             this.newIconColor = ko.observable('');
+            this.editingItem = ko.observable(null);
+
+            $(document).on('click', '.edit', this.editItem.bind(this));
 
         },
+        // function restore
 
 
         generateNewColorBg: function (){
@@ -47,17 +82,6 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
         generateNewColorIcon: function (){
             this.newIconColor(this.getRandomColor());
         },
-        // ////////// started function slide  ////////
-        //
-        // incrementClickCounter: function () {
-        //     console.log('clip');
-        //
-        // },
-        //
-        // decrementClickCounter: function () {
-        //     console.log('clop');
-        // },
-        ////////// started function getRandom  ////////
 
         getRandomColor: function () {
             const letters = '0123456789ABCDEF';
@@ -69,6 +93,30 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
         },
 
         ////////// end function getRandom  ///////////
+        initSlider: function (){
+            console.log($('.slider-default'));
+            const self = this;
+
+            $('.slider-default').slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                autoplay: true,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 3,
+                            dots: true,
+                            infinite: true,
+                        }
+                    },
+                ]
+            })
+
+        },
 
         ////////// started function edit and save  ////////
         toggleArchive: function (){
@@ -82,46 +130,6 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
                 this.archive.remove(category);
             }
         },
-
-        // function restore
-        restoreItemArchive: function (category, item) {
-            const newId = Date.now();
-            const categoryName = item.originalCategory;
-            const itemValue =  item.value;
-            const itemBackgroundColor = item.backgroundColor;
-            const itemIconColor =  item.iconColor;
-
-            let existingCategory = null;
-            for (let i = 0; i < this.categories().length; i++) {
-                if (this.categories()[i].category === categoryName) {
-                    existingCategory = this.categories()[i];
-                    break;
-                }
-            }
-
-            if (existingCategory) {
-                existingCategory.items.push({
-                    id: newId,
-                    value: itemValue,
-                    backgroundColor: itemBackgroundColor,
-                    iconColor: itemIconColor,
-
-                });
-            } else {
-                this.categories.push({
-                    category: categoryName,
-                    items: ko.observableArray([{
-                        id: newId,
-                        value: itemValue,
-                        backgroundColor: itemBackgroundColor,
-                        iconColor: itemIconColor,
-                    }])
-                });
-            }
-            this.removeItemArchive(category, item);
-            this.closePopup('#archive-popup');
-        },
-        //
         archiveCategory: function (category, item) {
             const newId = Date.now();
             const categoryName = category.category;
@@ -155,7 +163,7 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
                     }])
                 });
             }
-            this.closePopup('#archive-popup');
+
             this.sortArchive();//викликаю функцію сортування
 
             category.items.remove(item); // видаляю задачу
@@ -171,30 +179,19 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
 
 
         ////////// started function edit and save  ////////
-        editItem: function (category, item) {
-            this.openPopup();
-            // обєкт який редагую
-            this.editingItem({
-                category: category,
-                item: item,
-            });
-            this.newBackgroundColor(item.backgroundColor);
-            this.newIconColor(item.iconColor);
-            //відображення категорії редагування
-            this.selectedCategory(category.category);
-            //задача елемента для редагування
-            this.newItem(item.value);
-            this.isEditSave(true); //встановлюю флажок що кнопка видима
-        },
 
         saveItem: function () {
-
             const self = this;
             // Отримую елемент для редагування
             const editingItem = this.editingItem();
+            console.log(editingItem);
             // тут отримую назву нової категорії
             const newCategory = this.newCategoryName();
+            console.log(newCategory);
             let originalBackgroundColor = null;
+            if($('.slider-default').hasClass('slick-initialized')) {
+                $('.slider-default').slick('unslick');
+            }
             // Перевіряю чи потрібно створити нову категорію і задачу
             if (newCategory && !this.categoryExists(newCategory) && this.newItem().trim() !== '') {
                 const newId = Date.now();
@@ -249,7 +246,9 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
 
             this.editingItem(null);
             this.newItem('');
+            self.initSlider();
             this.closePopup('#modal-content');
+            self.initSlider();
         },
         ////////// end function edit and save //////////
 
@@ -268,12 +267,16 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
         addCategory: function () {
             const self = this;
             const newCategory = this.newCategoryName();
+
+            if($('.slider-default').hasClass('slick-initialized')) {
+                $('.slider-default').slick('unslick');
+            }
+
             if (newCategory && !this.categoryExists(newCategory) && self.newItem()) {
                 const newId = Date.now();
 
                 this.categories.push({
                     category: newCategory,
-
                     items: ko.observableArray([{
                         id: newId,
                         value: self.newItem(),
@@ -281,14 +284,15 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
                         iconColor: self.newIconColor(),
                     }]),
                 });
+
                 this.selectedCategory(newCategory);
                 this.newCategoryName('');
                 self.newItem('');
-                this.slickSlide();
                 this.closePopup('#modal-content');
             } else {
+
                 const targetCategory = this.categories().map(function (cat) {
-                    const categoryToChange =  self.newCategoryName() || self.selectedCategory();
+                    const categoryToChange = self.newCategoryName() || self.selectedCategory();
 
                     if (categoryToChange.toLowerCase() === cat['category'].toLowerCase() && self.newItem()) {
                         cat.items.push({
@@ -299,12 +303,14 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
                         });
                         self.newItem('');
                         self.closePopup('#modal-content');
-
+                        console.log(cat.items().length);
                     }
                     return cat
                 });
+
                 this.categories(targetCategory);
             }
+            self.initSlider();
             return false;
         },
 
