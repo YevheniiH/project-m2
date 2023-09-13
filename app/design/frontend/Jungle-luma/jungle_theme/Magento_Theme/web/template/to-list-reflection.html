@@ -37,7 +37,7 @@
                         <span data-bind="text: $data.value"></span>
                         <div class="items-button">
                             <button class="edit edit-delete" data-bind="attr:{'data-item-index': $index()}"><i class='far fa-edit' style='font-size:18px'></i></button>
-                            <button class="delete edit-delete" ><i class='fas fa-trash' style='font-size:18px'></i></button>
+                            <button class="delete edit-delete" data-bind="attr:{'data-item-index': $index()}"><i class='fas fa-trash' style='font-size:18px'></i></button>
                         </div>
                     </div>
                 </li>
