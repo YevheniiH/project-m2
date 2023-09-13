@@ -62,14 +62,13 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
             this.newCategoryName = ko.observable('');
             this.newItem = ko.observable('');
             this.selectedCategoryItems = ko.observableArray([]);
-
             this.isEditSave = ko.observable(false); //видимість кнопки "save Edit" кнопки
             this.archive  = ko.observableArray([]);
             this.toggleArchiveSwitch = ko.observable(false);
             this.newBackgroundColor = ko.observable('')
             this.newIconColor = ko.observable('');
             this.editingItem = ko.observable(null);
-
+            this.initSlider();
             $(document).on('click', '.edit', this.editItem.bind(this));
             $(document).on('click', '.delete', this.archiveCategory.bind(this));
         },
@@ -364,7 +363,6 @@ define(['jquery', 'uiComponent', 'ko', 'Magento_Ui/js/modal/modal', 'slick'], fu
                         });
                         self.newItem('');
                         self.closePopup('#modal-content');
-                        console.log(cat.items().length);
                     }
                     return cat
                 });
