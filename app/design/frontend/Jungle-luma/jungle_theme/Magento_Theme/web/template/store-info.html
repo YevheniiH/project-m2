@@ -1,0 +1,24 @@
+<div class="stores-content">
+    <h4>Акція діє в магазинах м. <span data-bind="text: cityName"></span></h4>
+    <div class="stores-info">
+        <ul data-bind="foreach: paginationStores">
+            <li>
+                <img data-bind="attr: { src: imageUrl }" alt="Store Image">
+                <div class="info-store">
+                    <span class="name-city" data-bind="text: name"></span>
+                    <span data-bind="text: mall"></span>
+                    <span data-bind="text: address"></span>
+                    <span data-bind="text: phone"></span>
+                    <span data-bind="text: schedule"></span>
+                    <a class="read-more" data-bind="attr: { href: link, target: '_blank' }">Докладніше</a>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="pagination-container" afterRender="initPagination">
+    <div id="data-container">
+    </div>
+</div>
+

@@ -1,0 +1,17 @@
+<div class="city-shops-wrapper">
+    <div class="city-content">
+        <h3>Оберіть місто</h3>
+        <select id="selectedCity" data-bind="options: cities, optionsText: 'label', optionsValue: 'id', value: selectedCity">
+        </select>
+    </div>
+    <div class="available-shops">
+        <h3>Оберіть магазин</h3>
+        <div data-bind="foreach: availableShops">
+            <div>
+                <span data-bind="text: name"></span>
+                <input type="checkbox" data-bind="checked: $parent.checkedFilters, value: name">
+            </div>
+        </div>
+    </div>
+</div>
+
