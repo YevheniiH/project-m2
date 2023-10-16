@@ -1,13 +1,93 @@
-@background: pink;   // можна вимкнути за допомогою false
-
 & when (@media-common = true){
-    body {
-        background: tomato;
-        //@background: @background; //якщо була така змінна. написати none
-        .lib-css(background, @background, 1);
-        //lib-css приймає три аргумента
-        .lib-font-size(24px);
-        .lib-line-height(28px);
+    .columns {
+        .sidebar-main {
+            float: left;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .main-right {
+            #store-wrapper {
+                .stores-content {
+                    h4 {
+                        text-align: center;
+                        .lib-font-size(24px);
+                        color: @color-black;
+                        font-weight: @font-weight__heavier;
+                    }
+
+                    .stores-info {
+                        ul {
+                            column-count: 2;
+                            column-gap: 20px;
+
+                            li {
+                                .lib-vendor-prefix-display();
+                                max-width: 460px;
+
+                                img {
+                                    max-width: 130px;
+                                    max-height: 130px;
+                                }
+
+                                .info-store {
+                                    width: 300px;
+                                    margin-left: 10px;
+
+                                    .name-city {
+                                        .lib-font-size(16px);
+                                        color: @color-black;
+                                        font-weight: @font-weight__semibold;
+                                    }
+
+                                    span {
+                                        display: block;
+                                        .lib-font-size(14px);
+                                        color: @color-black_dark;
+                                        font-weight: @font-weight__regular;
+                                    }
+
+                                    .read-more {
+                                        display: block;
+                                        text-align: right;
+
+                                        &:after {
+                                            content: '\2192';
+                                            margin-left: 5px;
+                                            display: inline-block;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #pagination-container {
+                    ul {
+                        .lib-vendor-prefix-display();
+                        justify-content: center;
+
+                        li {
+                            .lib-font-size(16px);
+                            color: @color-black;
+                            font-weight: @font-weight__semibold;
+                            margin: 0 10px;
+                        }
+                    }
+
+                    .paginationjs-size-changer {
+                        select {
+                            width: 100px;
+                            display: block;
+                            margin: 0 auto;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
