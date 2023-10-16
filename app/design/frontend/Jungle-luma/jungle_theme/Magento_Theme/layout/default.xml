@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="columns">
+            <container name="div.sidebar.main" htmlTag="div" htmlClass="sidebar sidebar-main" before="-">
+                <container name="sidebar.main" as="sidebar_main" label="Sidebar Main">
+                    <block class="Magento\Framework\View\Element\Template" name="city.list" template="Magento_Theme::city_list.phtml"/>
+                </container>
+            </container>
+            <container name="div.main.right" htmlTag="div" htmlClass="main-right" after="div.sidebar.main">
+                <block class="Magento\Framework\View\Element\Template" name="store.info" template="Magento_Theme::store_list.phtml"/>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

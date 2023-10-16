@@ -1,0 +1,19 @@
+<div id="select-wrapper" data-bind="scope: 'select-city'">
+    <!-- ko template: getTemplate() --> <!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "#select-wrapper": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "select-city": {
+                        "component": "Magento_Theme/js/cities",
+                        "config": {
+                            "template": "Magento_Theme/city-shops.html"
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>

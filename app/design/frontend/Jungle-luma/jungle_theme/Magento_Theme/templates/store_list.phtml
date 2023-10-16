@@ -1,0 +1,19 @@
+<div id="store-wrapper" data-bind="scope: 'store-city'">
+    <!-- ko template: getTemplate() --> <!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "#store-wrapper": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "store-city": {
+                        "component": "Magento_Theme/js/cities",
+                        "config": {
+                            "template": "Magento_Theme/store-info.html"
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>
